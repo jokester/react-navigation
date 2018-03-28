@@ -49,6 +49,7 @@ export default (routeConfigs, config = {}) => {
     );
   }
 
+  // return initial state of child route (use child router if any)
   function resetChildRoute(routeName) {
     const params =
       routeName === initialRouteName ? initialRouteParams : undefined;
@@ -79,12 +80,19 @@ export default (routeConfigs, config = {}) => {
       };
     },
 
+    /**
+     * return patched possibleNextState with resetOnBlur flag applied
+     * @param {*} prevState
+     * @param {*} possibleNextState
+     */
     getNextState(prevState, possibleNextState) {
       if (!prevState) {
         return possibleNextState;
       }
 
       let nextState;
+
+      // reset unfocused child route
       if (prevState.index !== possibleNextState.index && resetOnBlur) {
         const prevRouteName = prevState.routes[prevState.index].routeName;
         const nextRoutes = [...possibleNextState.routes];
@@ -138,6 +146,8 @@ export default (routeConfigs, config = {}) => {
           action,
           activeChildLastState
         );
+        // do nothing if current child does not handle it
+        // XXX: WHY?? what if the action is not for current child?
         if (!activeChildState && inputState) {
           return null;
         }
