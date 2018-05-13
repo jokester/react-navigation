@@ -63,6 +63,7 @@ function createNavigator(NavigatorView, router, navigationConfig) {
             dispatch(action);
           };
         });
+        // childNavigation.dispatch === navigation.dispatch
         const childNavigation = {
           ...actionHelpers,
           actions: actionCreators,

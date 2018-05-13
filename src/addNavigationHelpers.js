@@ -2,6 +2,7 @@
 
 import NavigationActions from './NavigationActions';
 import invariant from './utils/invariant';
+// addNavigationHelpers() is solely for library consumers?
 export default function(navigation) {
   return {
     ...navigation,
@@ -94,6 +95,7 @@ export default function(navigation) {
           routeName,
           params,
           action,
+          // XXX: why key in bottom state?
           key: navigation.state.key,
         })
       ),
